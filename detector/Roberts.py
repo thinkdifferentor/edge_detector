@@ -8,6 +8,7 @@ __author__ = "Kevin Gay"
 
 from PIL import Image
 import math
+import numpy as np
 
 class Roberts(object):
 
@@ -41,9 +42,17 @@ class Roberts(object):
     def saveIm(self, name):
         self.sobelIm.save(name)
 
+
 def test():
-    im = 'jaguar'
-    inName = im + '.jpg'
-    outName = im + '-roberts.jpg'
-    roberts = Roberts(inName)
-    roberts.saveIm(outName)
+    img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\ci_1.png'
+    name = img_path.split('\\')[-1].split('.')[0]
+    out_name = name + '_roberts.jpg'
+    roberts = Roberts(img_path)
+
+    print(np.array(roberts.sobelIm).shape)
+    np.savetxt(r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\{}_edge.txt'.format(name), np.array(roberts.sobelIm), fmt='%d',newline='\n')
+
+    roberts.saveIm(out_name)
+
+if __name__ == '__main__':
+    test()

@@ -8,6 +8,7 @@ __author__ = "Kevin Gay"
 
 from PIL import Image
 import math
+import numpy as np
 
 class Sobel(object):
 
@@ -43,13 +44,17 @@ class Sobel(object):
     def saveIm(self, name):
         self.sobelIm.save(name)
 
+
 def test():
-    im = 'jaguar'
-    inName = im + '.jpg'
-    outName = im + '-sobelNew.jpg'
-    sobel = Sobel(inName)
-    sobel.saveIm(outName)
-    sobel.saveGray('jaguar-gray.jpg')
+    img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\ci_1.png'
+    name = img_path.split('\\')[-1].split('.')[0]
+    out_name = name + '_sobel.jpg'
+    prewitt = Sobel(img_path)
+
+    print(np.array(prewitt.sobelIm).shape)
+    np.savetxt(r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\{}_edge.txt'.format(name), np.array(prewitt.sobelIm), fmt='%d',newline='\n')
+    
+    prewitt.saveIm(out_name)
 
 if __name__ == '__main__':
-    test()
+    test()    

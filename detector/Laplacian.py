@@ -25,15 +25,18 @@ import os
 # 2.在满足第一条基础上，提取的边缘尽可能简单，过于复杂可能不利于训练
 
 
-img_path = '/data/jiangjun/myprojects/edge_detector/images/Nature/ci_1.png'
+img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\MMWHS\ct_train_slice47_image.png'
 
 # root = os.path.dirname(img_path)
-# name = img_path.split('\\')[-1].split('.')[0]
+name = img_path.split('\\')[-1].split('.')[0]
 
-img = cv.imread(img_path, 0)
+img = cv.imread(img_path, cv.IMREAD_GRAYSCALE)
 # print(img.shape, img.dtype)
-# img = cv.GaussianBlur(img,(3,3),0)
-edges = cv.Laplacian(img, cv.CV_64F)
+img = cv.GaussianBlur(img,(3,3),0)
+edges = cv.Laplacian(img, -1)
+edges =  cv.convertScaleAbs(edges)
+print(edges.shape, edges.dtype)
+# np.savetxt(r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\{}_edge.txt'.format(name), edges, fmt='%d',newline='\n')
 
 # edges[edges != 0] = 1 # the edge pixel value is 255
 # np.savetxt(r'D:\Documents\Postgraduate\Project\visualization\CannyEdgeDetector\BraTS\{}_edge.txt'.format(name), edges, fmt='%d',newline='\n')
