@@ -51,3 +51,5 @@ def test():
     sobel.saveIm(outName)
     sobel.saveGray('jaguar-gray.jpg')
 
+if __name__ == '__main__':
+    test()
