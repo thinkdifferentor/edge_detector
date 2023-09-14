@@ -8,6 +8,7 @@ __author__ = "Kevin Gay"
 
 from PIL import Image
 import math
+from matplotlib import pyplot as plt
 import numpy as np
 
 class Sobel(object):
@@ -46,15 +47,17 @@ class Sobel(object):
 
 
 def test():
-    img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\ci_1.png'
+    # img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\BraTS\BraTS19_2013_7_1_t1ce_z_100.png'
+    img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Prostate\BIDMC_2.png'
     name = img_path.split('\\')[-1].split('.')[0]
     out_name = name + '_sobel.jpg'
-    prewitt = Sobel(img_path)
+    sobel = Sobel(img_path)
 
-    print(np.array(prewitt.sobelIm).shape)
-    np.savetxt(r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\{}_edge.txt'.format(name), np.array(prewitt.sobelIm), fmt='%d',newline='\n')
-    
-    prewitt.saveIm(out_name)
+    print(np.array(sobel.sobelIm).shape)
+    # np.savetxt(r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\{}_edge.txt'.format(name), np.array(sobel.sobelIm), fmt='%d',newline='\n')
+    # np.save(r'D:\Documents\Postgraduate\Project\edge_detector\images\BraTS\{}_edge.npy'.format(name), edges)
+    # plt.imsave(r'D:\Documents\Postgraduate\Project\edge_detector\images\BraTS\{}_edge.png'.format(name), edges, cmap='gray')
+    sobel.saveIm(out_name)
 
 if __name__ == '__main__':
     test()    

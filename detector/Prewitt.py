@@ -43,13 +43,15 @@ class Prewitt(object):
         self.prewittIm.save(name)
 
 def test():
-    img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\ci_1.png'
+    # img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\BraTS\BraTS19_2013_7_1_t1ce_z_100.png'
+    # img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\ci_1.png'
+    img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Prostate\BIDMC_2.png'
     name = img_path.split('\\')[-1].split('.')[0]
     out_name = name + '_prewitt.jpg'
     prewitt = Prewitt(img_path)
     
-    print(np.array(prewitt.prewittIm).shape)
-    np.savetxt(r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\{}_edge.txt'.format(name), np.array(prewitt.prewittIm), fmt='%d',newline='\n')
+    # print(np.array(prewitt.prewittIm).shape)
+    # np.savetxt(r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\{}_edge.txt'.format(name), np.array(prewitt.prewittIm), fmt='%d',newline='\n')
 
     prewitt.saveIm(out_name)
 

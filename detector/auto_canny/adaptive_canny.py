@@ -7,50 +7,54 @@ import cv2
 import gradient as g
 import loop as l
 import copy
-import evaluate as e
 
 # 读取一张图片,做灰度化处理,转为二维矩阵。虽然原图是灰度图,但仍需此步骤,不然会是三维矩阵
-peppers = cv2.imread(r'D:\Documents\Postgraduate\Project\visualization\CannyEdgeDetector\BraTS\BraTS19_TCIA02_300_1_t2_z_73.png', 0)
+image = cv2.imread(r'D:\Documents\Postgraduate\Project\edge_detector\images\Prostate\BMC_2.png', 0)
 
 # 使用高斯滤波消除噪声
 # (5,5)是高斯核的大小,0是sigmaX,0的意思是让方程自己给你算对应的sigma
-peppers_b = cv2.GaussianBlur(peppers, (5, 5), 0)
+image_b = cv2.GaussianBlur(image, (5, 5), 0)
 
-peppers_t = copy.deepcopy(peppers_b)
+image_t = copy.deepcopy(image_b)
 
 # 返回的是经过非极大值抑制后的矩阵
-peppers_g = g.gradient(peppers_t)
+image_g = g.gradient(image_t)
 
 # 返回的是迭代后的最优阈值
-peppers_T = l.loop(peppers_g)
+image_T = l.loop(image_g)
 
 # ret是返回的最优阈值,image是处理后的图
 # THRESH_BINARY就是三角法（这句话存疑,忘记哪里看来的了,但实际使用起来似乎使用的阈值是传入的阈值）
 # THRESH_OTSU是大津法
 # 这一个函数会根据直方图选择最优的阈值,即otus或传入的阈值,可以从返回值ret中获取
-# peppers_ret, new1 = cv2.threshold(peppers_b, peppers_T, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+# image_ret, new1 = cv2.threshold(image_b, image_T, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 # 这一条就只会使用大津法算出的阈值,但大津有缺点,直方图没有明显双峰时效果可能不好
-peppers_ret, image = cv2.threshold(peppers_b, peppers_T, 255, cv2.THRESH_OTSU)
+image_ret, _ = cv2.threshold(image_b, image_T, 255, cv2.THRESH_OTSU)
 
 # 因为想要有更多的边被画出来,所以取更小的（我自己一厢情愿的,可能没有理论依据）
-peppers_T = min(peppers_ret, peppers_T)
+image_T = min(image_ret, image_T)
 
-peppers = cv2.Canny(peppers_b, peppers_T / 2, peppers_T)
+image = cv2.Canny(image_b, image_T / 2, image_T)
+image[image == 255] = 1
+
+# np.save(r'D:\Documents\Postgraduate\Project\edge_detector\images\Prostate\BMC_2_edge.npy', image)
+np.savetxt(r'D:\Documents\Postgraduate\Project\edge_detector\images\Prostate\BMC_2_edge.txt', image, fmt='%d',newline='\n')
+
 # 这是自适应阈值的边缘切割,用高斯核做窗口去给每一个像素一个自适应阈值
 # 最后一个参数会影响切割质量,具体原理请参考文档
 # 倒数第二个会影响切割出来的边的宽度,原理见文档
-# peppers_two = cv2.adaptiveThreshold(peppers_b, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 3, 2)
+# image_two = cv2.adaptiveThreshold(image_b, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 3, 2)
 
 # 将图片做一个反色处理
-# peppers[peppers == 0] = 1
-# peppers[peppers == 255] = 0
-# peppers[peppers == 1] = 255
+# image[image == 0] = 1
+# image[image == 255] = 0
+# image[image == 1] = 255
 
-cv2.imshow('peppers', peppers)
-# cv2.imshow('peppers_two', peppers_two)
+cv2.imshow('image', image)
+# cv2.imshow('image_two', image_two)
 
 # 保存图片
-# cv2.imwrite('peppersQ1.png', peppers)
+# cv2.imwrite('imageQ1.png', image)
 
 cv2.waitKey(0)
 

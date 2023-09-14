@@ -25,7 +25,9 @@ import os
 # 2.在满足第一条基础上，提取的边缘尽可能简单，过于复杂可能不利于训练
 
 
-img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\ci_1.png'
+# img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\ci_1.png'
+img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Prostate\BIDMC_2.png'
+
 
 # root = os.path.dirname(img_path)
 name = img_path.split('\\')[-1].split('.')[0]
