@@ -15,6 +15,7 @@ class Roberts(object):
     def __init__(self, imPath):
 
         im = Image.open(imPath).convert('L')
+        print(im.size)
         self.width, self.height = im.size
         mat = im.load()
 
