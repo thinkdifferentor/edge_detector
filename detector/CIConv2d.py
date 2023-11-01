@@ -164,8 +164,10 @@ class CIConv2d(nn.Module):
 
 
 if __name__ == '__main__':
-    img = r'D:\Documents\Postgraduate\Project\summary_sdg\edge\Edge_BraTS\BraTS19_2013_7_1_t2_z_74.png'
+    img = r'D:\Documents\Postgraduate\Project\edge_detector\edge\Edge_MMWHS\case2\MRI2.png'
     inv = 'W'
+    name = img.split('\\')[-1].split('.')[0]
+    out_name = name + '_ciconv_m.png'
 
     # load and preprocess input image
     i = torchvision.transforms.functional.to_tensor(cv2.imread(img)[:,:,::-1].copy())[None,:,:,:]
@@ -183,14 +185,16 @@ if __name__ == '__main__':
     plt.imshow(cv2.imread(img)[:,:,::-1])
     plt.subplot(1,3,2)
     w=CIConv2d(inv, k=3, scale=-0.)(i)
-    plt.imsave(r'D:\Documents\Postgraduate\Project\summary_sdg\edge\Edge_BraTS\BraTS19_2013_7_1_t2_z_74_edge_ciconv2.png', w[0,0,:].detach().numpy(), cmap='gray')
 
     # print(torch.isnan(w).any())
     plt.imshow(w.detach()[0,0,:,:], vmin=-r, vmax=r, cmap='gray')
     plt.title('scale=0')
     plt.subplot(1,3,3)
-    w=CIConv2d(inv, k=3, scale=-2.5)(i)
+    w=CIConv2d(inv, k=3, scale=-0.5)(i)
     print(w.shape)
+
+    plt.imsave(out_name, w[0,0,:].detach().numpy(), cmap='gray')
+
 
     # print(torch.isnan(w).any())
     plt.imshow(w.detach()[0,0,:,:], vmin=-r, vmax=r, cmap='gray')

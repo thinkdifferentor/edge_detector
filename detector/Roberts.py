@@ -45,11 +45,11 @@ class Roberts(object):
 
 
 def test():
-    img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Prostate\BIDMC_2.png'
+    img_path = r'D:\Documents\Postgraduate\Project\edge_detector\edge\Edge_MMWHS\case2\MRI2.png'
     # img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\BraTS\BraTS19_2013_7_1_t1ce_z_100.png'
     # img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\ci_1.png'
     name = img_path.split('\\')[-1].split('.')[0]
-    out_name = name + '_roberts.jpg'
+    out_name = name + '_ro.png'
     roberts = Roberts(img_path)
 
     # print(np.array(roberts.robertsIm).shape)

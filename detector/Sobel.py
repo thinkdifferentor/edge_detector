@@ -47,16 +47,17 @@ class Sobel(object):
 
 
 def test():
-    img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\MMWHS\MRI1.png'
+    img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\BraTS\case1\BraTS19_2013_7_1_t1_z_100.png'
     name = img_path.split('\\')[-1].split('.')[0]
-    out_name = name + '_sobel.jpg'
+    out_name = name + '_so.png'
     sobel = Sobel(img_path)
 
     print(np.array(sobel.sobelIm).shape)
     # np.savetxt(r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\{}_edge.txt'.format(name), np.array(sobel.sobelIm), fmt='%d',newline='\n')
     # np.save(r'D:\Documents\Postgraduate\Project\edge_detector\images\BraTS\{}_edge.npy'.format(name), edges)
-    # plt.imsave(r'D:\Documents\Postgraduate\Project\edge_detector\images\BraTS\{}_edge.png'.format(name), edges, cmap='gray')
-    sobel.saveIm(out_name)
+    sobel = np.array(sobel.sobelIm)
+    plt.imsave(r'D:\Documents\Postgraduate\Project\edge_detector\images\BraTS\case1\{}_edge.png'.format(name), sobel, cmap='bwr') # 'bwr' or 'gray'
+    # sobel.saveIm(out_name)
 
 if __name__ == '__main__':
     test()    
