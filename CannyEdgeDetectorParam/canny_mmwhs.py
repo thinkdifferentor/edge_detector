@@ -2,14 +2,8 @@ import numpy as np
 import cv2 as cv
 from matplotlib import pyplot as plt
 import os
-import glob
-from tqdm import tqdm
 
 ####### 参数理解 #######
-
-# laplacian, prewitt, roberts, sobel, canny, aptcanny
-# edge_sd_laplacian
-# edge_ss_laplacian
 
 # 1.提前做高斯模糊可以去除噪点，会使得检测的边缘变少，对于医疗图像这里不使用，一方面相比自然图像噪声较少；另一方面使用的话可能会使得边缘细节信息丢失，不利于医学诊断。
 
@@ -33,31 +27,29 @@ from tqdm import tqdm
 
 # SDG: for source domain
 # OCDA: for source & compound target domain
+img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\MMWHS\ct_train_slice12_image.png'
 
-def processOneImage(img_path, tgt_dir):
-    os.makedirs(tgt_dir, exist_ok=True)
+# root = os.path.dirname(img_path)
+# name = img_path.split('\\')[-1].split('.')[0]
 
-    # root = os.path.dirname(img_path)
-    name = img_path.split('/')[-1].split('.')[0]
+img = cv.imread(img_path, 0)
+# print(img.shape, img.dtype)
+img = cv.GaussianBlur(img,(3,3),0)
+# edges = cv.Canny(img, threshold1=30, threshold2=80, L2gradient=True, apertureSize=3) # mri
 
-    img = cv.imread(img_path, 0)
-    # print(img.shape, img.dtype)
-    img = cv.GaussianBlur(img,(3,3),0)
-    edges = cv.Canny(img, threshold1=70, threshold2=120, L2gradient=True, apertureSize=3)
+edges = cv.Canny(img, threshold1=70, threshold2=120, L2gradient=True, apertureSize=3) # ct
 
-    edges[edges != 0] = 1 # the edge pixel value is 255 at return
-    # np.savetxt('{}/{}_edge.txt'.format(tgt_dir, name), edges, fmt='%d',newline='\n')
-    np.save('{}/{}_edge.npy'.format(tgt_dir, name), edges)
-    plt.imsave('{}/{}_edge.png'.format(tgt_dir, name), edges, cmap='gray')
 
-def processOneModality(src_dir, tgt_dir):
-    img_list = glob.glob('{}/*.png'.format(src_dir))
-    for img_path in tqdm(img_list, desc='Processing...'):
-        processOneImage(img_path, tgt_dir)
+# edges[edges != 0] = 1 # the edge pixel value is 255
+# np.savetxt(r'D:\Documents\Postgraduate\Project\visualization\CannyEdgeDetector\BraTS\{}_edge.txt'.format(name), edges, fmt='%d',newline='\n')
+# np.save(r'D:\Documents\Postgraduate\Project\visualization\CannyEdgeDetector\BraTS\{}_edge.npy'.format(name), edges)
+# plt.imsave(r'D:\Documents\Postgraduate\Project\visualization\CannyEdgeDetector\BraTS\{}_edge.png'.format(name), edges, cmap='gray')
 
-if __name__ == '__main__':
-    src_dir = '/data/jiangjun/datas/PnpAda_release_data/MMWHS/transed_roi/image_val_aug_rd/mr_val_tfs'
-    tgt_dir = '/data/jiangjun/datas/PnpAda_release_data/MMWHS/transed_roi/edge_canny/rm_val_tfs_aug_rd'
-    processOneModality(src_dir, tgt_dir)
-    print("All images are processed !")
-    
+
+plt.subplot(121),plt.imshow(img,cmap = 'gray')
+plt.title('Original Image'), plt.xticks([]), plt.yticks([])
+
+plt.subplot(122),plt.imshow(edges,cmap = 'gray')
+plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
+
+plt.show()

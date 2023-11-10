@@ -27,27 +27,26 @@ import os
 
 # SDG: for source domain
 # OCDA: for source & compound target domain
-img_path = r'D:\Documents\Postgraduate\Project\visualization\CannyEdgeDetector\Prostate\UCL_2.png'
+img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Prostate\case1\RUNMC_2.png'
 
 # root = os.path.dirname(img_path)
 # name = img_path.split('\\')[-1].split('.')[0]
 
 img = cv.imread(img_path, 0)
 # print(img.shape, img.dtype)
-# img = cv.GaussianBlur(img,(3,3),0)
+img = cv.GaussianBlur(img,(3,3),0)
 
-# img = cv.GaussianBlur(img,(3,3),0)
 # edges = cv.Canny(img, threshold1=100, threshold2=200, L2gradient=True, apertureSize=3)  # for BMC-SiteB
 
-# edges = cv.Canny(img, threshold1=50, threshold2=100, L2gradient=True, apertureSize=3)  # for HK-SiteF
+# edges = cv.Canny(img, threshold1=30, threshold2=70, L2gradient=True, apertureSize=3)  # for HK-SiteF
 
-# img = cv.GaussianBlur(img,(3,3),0)
+# edges = cv.Canny(img, threshold1=20, threshold2=40, L2gradient=True, apertureSize=3)  # for BIDMC-SiteE
+
 # edges = cv.Canny(img, threshold1=50, threshold2=150, L2gradient=True, apertureSize=3) # for I2CVB-SiteC
 
-# img = cv.GaussianBlur(img,(3,3),0)
 # edges = cv.Canny(img, threshold1=50, threshold2=200, L2gradient=True, apertureSize=3) # for RUNMC-SiteA
 
-edges = cv.Canny(img, threshold1=50, threshold2=140, L2gradient=True, apertureSize=3) # for UCL-SiteD
+# edges = cv.Canny(img, threshold1=50, threshold2=140, L2gradient=True, apertureSize=3) # for UCL-SiteD
 
 # edges[edges != 0] = 1 # the edge pixel value is 255
 # np.savetxt(r'D:\Documents\Postgraduate\Project\visualization\CannyEdgeDetector\BraTS\{}_edge.txt'.format(name), edges, fmt='%d',newline='\n')

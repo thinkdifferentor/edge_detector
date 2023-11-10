@@ -25,23 +25,21 @@ import os
 # 2.在满足第一条基础上，提取的边缘尽可能简单，过于复杂可能不利于训练
 
 
-# img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\ci_1.png'
-img_path = r'D:\Documents\Postgraduate\Project\edge_detector\edge\Edge_MMWHS\case2\MRI2.png'
+img_path = r'D:\Documents\Postgraduate\Project\edge_detector\edge\Edge_BraTS\BraTS19_2013_7_1_t2_z_74.png'
 
-
-# root = os.path.dirname(img_path)
+root = os.path.dirname(img_path)
 name = img_path.split('\\')[-1].split('.')[0]
 
 img = cv.imread(img_path, cv.IMREAD_GRAYSCALE)
 print(img.shape, img.dtype)
 # img = cv.GaussianBlur(img,(3,3),0)
-edges = cv.Canny(img, threshold1=20, threshold2=40, L2gradient=False, apertureSize=3)
+edges = cv.Canny(img, threshold1=20, threshold2=80, L2gradient=True, apertureSize=3)
 # np.savetxt(r'D:\Documents\Postgraduate\Project\edge_detector\images\Nature\{}_edge.txt'.format(name), edges, fmt='%d',newline='\n')
 
 # edges[edges != 0] = 1 # the edge pixel value is 255
 # np.savetxt(r'D:\Documents\Postgraduate\Project\visualization\CannyEdgeDetector\BraTS\{}_edge.txt'.format(name), edges, fmt='%d',newline='\n')
 # np.save(r'D:\Documents\Postgraduate\Project\visualization\CannyEdgeDetector\BraTS\{}_edge.npy'.format(name), edges)
-plt.imsave(r'D:\Documents\Postgraduate\Project\edge_detector\edge\Edge_MMWHS\case2\{}_ca.png'.format(name), edges, cmap='gray')
+plt.imsave(r'{}\{}_edge_ca.png'.format(root, name), edges, cmap='gray')
 
 # plt.subplot(121),plt.imshow(img,cmap = 'gray')
 # plt.title('Original Image'), plt.xticks([]), plt.yticks([])

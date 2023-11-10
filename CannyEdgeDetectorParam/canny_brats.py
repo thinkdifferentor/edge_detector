@@ -27,15 +27,24 @@ import os
 
 # SDG: for source domain
 # OCDA: for source & compound target domain
-img_path = r'D:\Documents\Postgraduate\Project\visualization\CannyEdgeDetector\BraTS\BraTS19_2013_7_1_t1_z_100.png'
+img_path = r'D:\Documents\Postgraduate\Project\edge_detector\images\BraTS\case1\BraTS19_2013_7_1_t2_z_100.png'
 
 # root = os.path.dirname(img_path)
 # name = img_path.split('\\')[-1].split('.')[0]
 
 img = cv.imread(img_path, 0)
 # print(img.shape, img.dtype)
-# img = cv.GaussianBlur(img,(3,3),0)
-edges = cv.Canny(img, threshold1=40, threshold2=100, L2gradient=True, apertureSize=3)
+img = cv.GaussianBlur(img,(3,3),0)
+# edges = cv.Canny(img, threshold1=40, threshold2=100, L2gradient=True, apertureSize=3) # flair
+
+# edges = cv.Canny(img, threshold1=20, threshold2=60, L2gradient=True, apertureSize=3) # t1
+
+# edges = cv.Canny(img, threshold1=20, threshold2=50, L2gradient=True, apertureSize=3) # t1ce
+
+edges = cv.Canny(img, threshold1=40, threshold2=80, L2gradient=True, apertureSize=3) # t2
+
+
+
 
 # edges[edges != 0] = 1 # the edge pixel value is 255
 # np.savetxt(r'D:\Documents\Postgraduate\Project\visualization\CannyEdgeDetector\BraTS\{}_edge.txt'.format(name), edges, fmt='%d',newline='\n')
